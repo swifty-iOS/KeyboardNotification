@@ -24,28 +24,28 @@ class ViewController: UIViewController {
         super.viewWillAppear(animated)
         self.registerKeyBoardNotification()
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.deregisterKeyBoardNotification()
     }
-    
+
 }
 
 extension ViewController: KeyBoardNotification {
- 
+
     func willShowKeyBoard(note: Notification) {
         print("Keybaord will show")
     }
-    
+
     func didShowKeyBoard(note: Notification) {
         print("Keyboard did show")
     }
-    
+
     func willHideKeyBoard(note: Notification) {
         print("Keyboard will hide")
     }
-    
+
     func didHideKeyBoard(note: Notification) {
         print("Keybaord did hide")
     }
@@ -57,4 +57,3 @@ extension ViewController: UITextFieldDelegate {
         return true
     }
 }
-

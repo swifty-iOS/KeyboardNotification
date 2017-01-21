@@ -303,6 +303,7 @@
 				13E98D2D1E332E39004598ED /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
