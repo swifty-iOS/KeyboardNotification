@@ -25,7 +25,6 @@ extension NSObject {
 
 protocol Observer {
     var value: NSObject? { get }
-    func perform(selector: Selector, object: Notification)
 }
 
 class WeakObserver: Observer {
@@ -37,23 +36,12 @@ class WeakObserver: Observer {
     init (value: NSObject) {
         self.value = value
     }
-    
-    func perform(selector: Selector, object: Notification) {
-        if self.value?.responds(to: selector) == true {
-            _ = self.value?.perform(selector, with: object)
-        }
-    }
 }
 
 class AliveObserver: Observer {
     var value: NSObject?
     init (value: NSObject) {
         self.value = value
-    }
-    func perform(selector: Selector, object: Notification) {
-        if self.value?.responds(to: selector) == true {
-            _ = self.value?.perform(selector, with: object)
-        }
     }
 }
 
@@ -87,43 +75,42 @@ fileprivate class KeyBoardNotificationRegister {
         }
         self.observerObjects.remove(at: index)
     }
-    
+
     @objc func willShowKeyBoard(note: Notification) {
         self.observerObjects = self.observerObjects.filter { $0.value != nil }
         for each in self.observerObjects {
-            each.perform(selector: #selector(willShowKeyBoard), object: note)
+            _ = each.value?.perform(#selector(willShowKeyBoard), with: note)
         }
     }
-    
     @objc func didShowKeyBoard(note: Notification) {
         for each in self.observerObjects {
-            each.perform(selector: #selector(didShowKeyBoard), object: note)
+            _ = each.value?.perform(#selector(didShowKeyBoard), with: note)
         }
     }
     @objc func willHideKeyBoard(note: Notification) {
         self.observerObjects = self.observerObjects.filter { $0.value != nil }
         for each in self.observerObjects {
-            each.perform(selector: #selector(willHideKeyBoard), object: note)
+            _ = each.value?.perform(#selector(willHideKeyBoard), with: note)
         }
     }
     
     @objc func didHideKeyBoard(note: Notification) {
         for each in self.observerObjects {
-            each.perform(selector: #selector(didHideKeyBoard), object: note)
+            _ = each.value?.perform(#selector(didHideKeyBoard), with: note)
         }
     }
 }
 
 @objc protocol KeyBoardNotification {
-    @objc optional func willShowKeyBoard(note: Notification)
-    @objc optional func didShowKeyBoard(note: Notification)
-    @objc optional func willHideKeyBoard(note: Notification)
-    @objc optional func didHideKeyBoard(note: Notification)
+    @objc func willShowKeyBoard(note: Notification)
+    @objc func didShowKeyBoard(note: Notification)
+    @objc func willHideKeyBoard(note: Notification)
+    @objc func didHideKeyBoard(note: Notification)
 }
 
 extension Notification {
     var keyboardFrame: CGRect? { return self.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect }
     var keyboardSize: CGSize? { return self.keyboardFrame?.size }
-    
+
 }
 

@@ -37,22 +37,22 @@ class ViewController: UIViewController {
 extension ViewController: KeyBoardNotification {
     
     func willShowKeyBoard(note: Notification) {
-        print(note.keyboardFrame ?? "No fame detected")
+        print(note.keyboardFrame ?? "No frame detected")
         print("Keybaord will show")
     }
     
     func didShowKeyBoard(note: Notification) {
-        print(note.keyboardFrame ?? "No fame detected")
+        print(note.keyboardFrame ?? "No frame detected")
         print("Keyboard did show")
     }
     
     func willHideKeyBoard(note: Notification) {
-        print(note.keyboardFrame ?? "No fame detected")
+        print(note.keyboardSize ?? "No size detected")
         print("Keyboard will hide")
     }
     
     func didHideKeyBoard(note: Notification) {
-        print(note.keyboardFrame ?? "No fame detected")
+        print(note.keyboardFrame ?? "No frame detected")
         print("Keybaord did hide")
     }
 }

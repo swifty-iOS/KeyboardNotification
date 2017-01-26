@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		13BF22971E39E62800BD9FAA /* KeyboardNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BF22961E39E62800BD9FAA /* KeyboardNotification.swift */; };
+		13473E2B1E3A788D00834A5B /* KeyboardNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13473E2A1E3A788D00834A5B /* KeyboardNotification.swift */; };
 		13E98D1D1E332E39004598ED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E98D1C1E332E39004598ED /* AppDelegate.swift */; };
 		13E98D1F1E332E39004598ED /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E98D1E1E332E39004598ED /* ViewController.swift */; };
 		13E98D221E332E39004598ED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13E98D201E332E39004598ED /* Main.storyboard */; };
@@ -16,7 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		13BF22961E39E62800BD9FAA /* KeyboardNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardNotification.swift; sourceTree = "<group>"; };
+		13473E2A1E3A788D00834A5B /* KeyboardNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardNotification.swift; sourceTree = "<group>"; };
 		13E98D191E332E39004598ED /* Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13E98D1C1E332E39004598ED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		13E98D1E1E332E39004598ED /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -37,10 +37,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		13BF22951E39E62800BD9FAA /* Source */ = {
+		13473E291E3A788D00834A5B /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				13BF22961E39E62800BD9FAA /* KeyboardNotification.swift */,
+				13473E2A1E3A788D00834A5B /* KeyboardNotification.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -64,7 +64,7 @@
 		13E98D1B1E332E39004598ED /* Sample */ = {
 			isa = PBXGroup;
 			children = (
-				13BF22951E39E62800BD9FAA /* Source */,
+				13473E291E3A788D00834A5B /* Source */,
 				13E98D1C1E332E39004598ED /* AppDelegate.swift */,
 				13E98D1E1E332E39004598ED /* ViewController.swift */,
 				13E98D201E332E39004598ED /* Main.storyboard */,
@@ -107,6 +107,7 @@
 				TargetAttributes = {
 					13E98D181E332E38004598ED = {
 						CreatedOnToolsVersion = 8.1;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -147,7 +148,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13BF22971E39E62800BD9FAA /* KeyboardNotification.swift in Sources */,
+				13473E2B1E3A788D00834A5B /* KeyboardNotification.swift in Sources */,
 				13E98D1F1E332E39004598ED /* ViewController.swift in Sources */,
 				13E98D1D1E332E39004598ED /* AppDelegate.swift in Sources */,
 			);
@@ -222,6 +223,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -265,6 +267,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -279,7 +282,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = manish.Sample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -292,7 +295,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = manish.Sample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
