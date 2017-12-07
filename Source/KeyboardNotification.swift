@@ -9,13 +9,10 @@
 import Foundation
 import UIKit
 
-extension NSObject {
+public extension NSObject {
+    
     func registerKeyBoardNotification() {
         KeyBoardNotificationRegister.manager.register(object: self, keepAlive: false)
-    }
-    
-    func registerKeyBoardNotification(keepAlive: Bool) {
-        KeyBoardNotificationRegister.manager.register(object: self, keepAlive: keepAlive)
     }
     
     func deregisterKeyBoardNotification() {
@@ -23,16 +20,17 @@ extension NSObject {
     }
 }
 
-protocol Observer {
+private protocol Observer {
     var value: NSObject? { get }
     func perform(selector: Selector, object: Notification)
 }
 
-class WeakObserver: Observer {
+private class WeakObserver: Observer {
     weak var value: NSObject?
     init (value: NSObject) {
         self.value = value
     }
+    
     
     func perform(selector: Selector, object: Notification) {
         if self.value?.responds(to: selector) == true {
@@ -41,7 +39,7 @@ class WeakObserver: Observer {
     }
 }
 
-class AliveObserver: Observer {
+private class AliveObserver: Observer {
     var value: NSObject?
     init (value: NSObject) {
         self.value = value
@@ -63,9 +61,12 @@ fileprivate class KeyBoardNotificationRegister {
         NotificationCenter.default.addObserver(self, selector:  #selector(didShowKeyBoard), name:NSNotification.Name.UIKeyboardDidShow, object: nil)
         NotificationCenter.default.addObserver(self, selector:  #selector(willHideKeyBoard), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
         NotificationCenter.default.addObserver(self, selector:  #selector(didHideKeyBoard), name:NSNotification.Name.UIKeyboardDidHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector:  #selector(willChangeKeyBoardFrame), name:NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.addObserver(self, selector:  #selector(didChangeKeyBoardFrame), name:NSNotification.Name.UIKeyboardDidChangeFrame, object: nil)
     }
     
     deinit {
+        observerObjects.removeAll()
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidShow, object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
@@ -108,13 +109,29 @@ fileprivate class KeyBoardNotificationRegister {
             each.perform(selector: #selector(didHideKeyBoard), object: note)
         }
     }
+    
+    @objc func willChangeKeyBoardFrame(note: Notification) {
+        for each in self.observerObjects {
+            each.perform(selector: #selector(willChangeKeyBoardFrame), object: note)
+        }
+    }
+    
+    @objc func didChangeKeyBoardFrame(note: Notification) {
+        for each in self.observerObjects {
+            each.perform(selector: #selector(didChangeKeyBoardFrame), object: note)
+        }
+    }
+    
 }
 
-@objc protocol KeyBoardNotification {
+@objc public protocol KeyBoardNotification {
     @objc optional func willShowKeyBoard(note: Notification)
     @objc optional func didShowKeyBoard(note: Notification)
     @objc optional func willHideKeyBoard(note: Notification)
     @objc optional func didHideKeyBoard(note: Notification)
+    @objc optional func willChangeKeyBoardFrame(note: Notification)
+    @objc optional func didChangeKeyBoardFrame(note: Notification)
+    
 }
 
 extension Notification {
@@ -122,4 +139,3 @@ extension Notification {
     var keyboardSize: CGSize? { return self.keyboardFrame?.size }
     
 }
-
