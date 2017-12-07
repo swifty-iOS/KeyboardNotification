@@ -134,7 +134,7 @@ fileprivate class KeyBoardNotificationRegister {
     
 }
 
-extension Notification {
+public extension Notification {
     var keyboardFrame: CGRect? { return self.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect }
     var keyboardSize: CGSize? { return self.keyboardFrame?.size }
     
