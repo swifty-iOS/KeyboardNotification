@@ -8,7 +8,9 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, KeyboardNotification {
+    
+    var keyboardTokens: [NSObjectProtocol]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,39 +24,42 @@ class ViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.registerKeyBoardNotification()
-        let v = ViewController()
-        v.registerKeyBoardNotification()
+        registerKeyboardNotification()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.deregisterKeyBoardNotification()
+        deregisterKeyboardNotification()
     }
     
 }
 
-extension ViewController: KeyBoardNotification {
+extension ViewController {
     
-    func willShowKeyBoard(note: Notification) {
-        print(note.keyboardFrame ?? "No frame detected")
+    func willChangeKeyboardFrame(_ note: Notification) {
+        print("Keyboard will change frame", "\nFrame:", note.keyboardFrame!, "Size:", note.keyboardSize!)
+    }
+    
+    func didChangeKeyboardFrame(_ note: Notification) {
+        print("Keyboard did change frame", "\nFrame:", note.keyboardFrame!, "Size:", note.keyboardSize!)
+    }
+    
+    func willShowKeyboard(_ note: Notification) {
         print("Keybaord will show")
     }
     
-    func didShowKeyBoard(note: Notification) {
-        print(note.keyboardFrame ?? "No frame detected")
+    func didShowKeyboard(_ note: Notification) {
         print("Keyboard did show")
     }
     
-    func willHideKeyBoard(note: Notification) {
-        print(note.keyboardSize ?? "No size detected")
+    func willHideKeyboard(_ note: Notification) {
         print("Keyboard will hide")
     }
     
-    func didHideKeyBoard(note: Notification) {
-        print(note.keyboardFrame ?? "No frame detected")
+    func didHideKeyboard(_ note: Notification) {
         print("Keybaord did hide")
     }
+    
 }
 
 extension ViewController: UITextFieldDelegate {

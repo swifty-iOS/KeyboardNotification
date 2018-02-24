@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		130754821E3A8A7C0095DDD4 /* KeyboardNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130754811E3A8A7C0095DDD4 /* KeyboardNotification.swift */; };
+		13C558EE2041BD2000E2C7F7 /* KeyboardNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C558ED2041BD2000E2C7F7 /* KeyboardNotification.swift */; };
 		13E98D1D1E332E39004598ED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E98D1C1E332E39004598ED /* AppDelegate.swift */; };
 		13E98D1F1E332E39004598ED /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E98D1E1E332E39004598ED /* ViewController.swift */; };
 		13E98D221E332E39004598ED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13E98D201E332E39004598ED /* Main.storyboard */; };
@@ -16,7 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		130754811E3A8A7C0095DDD4 /* KeyboardNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardNotification.swift; sourceTree = "<group>"; };
+		13C558ED2041BD2000E2C7F7 /* KeyboardNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardNotification.swift; sourceTree = "<group>"; };
 		13E98D191E332E39004598ED /* Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13E98D1C1E332E39004598ED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		13E98D1E1E332E39004598ED /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -40,7 +40,7 @@
 		130754801E3A8A7C0095DDD4 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				130754811E3A8A7C0095DDD4 /* KeyboardNotification.swift */,
+				13C558ED2041BD2000E2C7F7 /* KeyboardNotification.swift */,
 			);
 			path = Source;
 			sourceTree = SOURCE_ROOT;
@@ -148,9 +148,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				130754821E3A8A7C0095DDD4 /* KeyboardNotification.swift in Sources */,
 				13E98D1F1E332E39004598ED /* ViewController.swift in Sources */,
 				13E98D1D1E332E39004598ED /* AppDelegate.swift in Sources */,
+				13C558EE2041BD2000E2C7F7 /* KeyboardNotification.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,7 +294,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = manish.Sample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -308,7 +308,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = manish.Sample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
