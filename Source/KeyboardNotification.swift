@@ -31,9 +31,10 @@ public extension KeyboardNotification {
         deregisterKeyboardNotification()
         keyboardTokens = []
         allNotificationName.forEach {
-            keyboardTokens?.append(NotificationCenter.default.addObserver(forName: $0, object: nil, queue: nil) { [weak self] in
-                self?.handleNotification($0)
-            })
+            keyboardTokens?.append(NotificationCenter.default.addObserver(forName: $0,
+                                                                          object: nil,
+                                                                          queue: nil,
+                                                                          using: handleNotification))
         }
     }
     
