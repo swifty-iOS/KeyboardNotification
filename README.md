@@ -1,6 +1,6 @@
 # KeyboardNotification
 
-KeyboardNotification protocol helps to manage Keyboard event like **Show / Hide** along with keyboard ***frame*** and ***size***.
+KeyboardNotification protocol helps to get Keyboard event like **Show / Hide / Frame Changes** along with keyboard ***frame*** and ***size***.
 
 
 ## Installation
@@ -30,56 +30,71 @@ $ pod install
 
 ##How to Use
 
-It is very simple and easy to use. Register object for keybaord Notification:
+It is very simple and easy to use. Just adopt **KeyboardNotification** protocol to your Controller class or any class. It will ask yoou declar a varibale ***keyboardTokens***.
 
+ 
 ```swift
-object.registerKeyBoardNotification()
+class ViewController: UIViewController, KeyboardNotification {
+	....
+	var keyboardTokens: [NSObjectProtocol]?
+	...
+}
 ```
-> Note: ***object*** must a subclass of **NSObject**
 
-It will register object to handle keyboard Notification until **object is alive**.
+### Register Object
+You need to **register** your class for keyboard notification just by calling.
 
-If you want to handle notifications event if object is **released from memory**, then register your object like:
-
-```swift
- self.registerKeyBoardNotification(keepAlive: true)
+```swift 
+ 	registerKeyboardNotification()
 ```
->**Note**: Using ***keepAlive*** holds object in memory and will not be released until **deregisterKeyBoardNotification()** method called explicity.
 
-If your no more interested to handle notification you should **deregister** your object like:
+>**Note**: Once you register the object, then you must need to deregister you object.
+
+
+### Deregister Object
+If your no more interested to handle notification you should **deregister** your object like
 
 ```swift
-self.deregisterKeyBoardNotification()
-``` 
+	deregisterKeyboardNotification()
+```
 
 ##Impleting Protocol
 
-To handle notification of Keyboard, just implement **KeyboardNotification** protocol on registered object. Aslo you can access **keyboardFrame** and  **keyboardSize** directly from notification object.
+Once you register the object, you can automatically get all notification mentioned below. Aslo you can access **keyboardFrame** and  **keyboardSize** directly from notification object.
 
 ```swift
-@objc protocol KeyBoardNotification {
-    @objc optional func willShowKeyBoard(note: Notification)
-    @objc optional func didShowKeyBoard(note: Notification)
-    @objc optional func willHideKeyBoard(note: Notification)
-    @objc optional func didHideKeyBoard(note: Notification)
-}
+    
+    func willShowKeyboard(_ note: Notification)
+    func didShowKeyboard(_ note: Notification)
+    func willHideKeyboard(_ note: Notification)
+    func didHideKeyboard(_ note: Notification)
+    func willChangeKeyboardFrame(_ note: Notification)
+    func didChangeKeyboardFrame(_ note: Notification)
+    
+
 ```
 
 ###Example
 
 ```swift
-extension ViewController: KeyBoardNotification {
-    internal func willShowKeyBoard(note: Notification) {
-        print(note.keyboardFrame ?? "No frame detected")
-        print("Keybaord will show")
+extension ViewController {
+
+	func willShowKeyboard(_ note: Notification) {
+	
+		let frame = note.keyboardFrame
     }
-    func willHideKeyBoard(note: Notification) {
-        print(note.keyboardSize ?? "No size detected")
-        print("Keyboard will hide")
-    }
+    
+    
+    func didHideKeyboard(_ note: Notification) {
+    	
+    	let size = note.keyboardSize   
+   	}    
+
 }
 
 ```
+
+For more details check for sample project.
 
 ##Licence
 

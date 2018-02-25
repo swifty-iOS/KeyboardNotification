@@ -9,24 +9,56 @@
 import Foundation
 import UIKit
 
+/// Get all keyboard show/hide notification
 public protocol KeyboardNotification: class {
     
+    /// Register object for keyboard notification
     func registerKeyboardNotification()
+    
+    /// Deregister object for keyboard notification
     func deregisterKeyboardNotification()
     
+    /// Keyboard notification token holder
     var keyboardTokens: [NSObjectProtocol]? { get set }
     
+    /// Callback, when keyboard is about to show
+    ///
+    /// - Parameter note: Notification object of Keyboard
     func willShowKeyboard(_ note: Notification)
+    
+    /// Callback, when keyboard is displayed on window
+    ///
+    /// - Parameter note: Notification object of Keyboard
     func didShowKeyboard(_ note: Notification)
+    
+    /// Callback, when keyboard is about to hide
+    ///
+    /// - Parameter note: Notification object of Keyboard
     func willHideKeyboard(_ note: Notification)
+    
+    /// Callback, when keyboard is hidden from window
+    ///
+    /// - Parameter note: Notification object of Keyboard
     func didHideKeyboard(_ note: Notification)
+    
+    /// Callback, when keyboard frame is about ot change
+    ///
+    /// - Parameter note: Notification object of Keyboard
     func willChangeKeyboardFrame(_ note: Notification)
+    
+    /// Callback, when keyboard frame is changed
+    ///
+    /// - Parameter note: Notification object of Keyboard
     func didChangeKeyboardFrame(_ note: Notification)
     
 }
 
-public extension KeyboardNotification {
+
+// MARK: - handling default implentation
+
+extension KeyboardNotification {
     
+    /// Register object for all keyboard event store it on token for future use
     func registerKeyboardNotification() {
         deregisterKeyboardNotification()
         keyboardTokens = []
@@ -38,6 +70,7 @@ public extension KeyboardNotification {
         }
     }
     
+    /// Deregister object for all keyboard notification saved as token
     func deregisterKeyboardNotification() {
         keyboardTokens?.forEach {
             NotificationCenter.default.removeObserver($0, name: nil, object: nil)
@@ -46,6 +79,7 @@ public extension KeyboardNotification {
         keyboardTokens = nil
     }
     
+    /// All notification thet need to handle
     private var allNotificationName: [Notification.Name] {
         
         return [Notification.Name.UIKeyboardWillShow,
@@ -56,6 +90,9 @@ public extension KeyboardNotification {
                 Notification.Name.UIKeyboardDidChangeFrame]
     }
     
+    /// map notification and callback method
+    ///
+    /// - Parameter note: Notification of keyboard
     private func handleNotification(_ note: Notification) {
         
         switch note.name {
@@ -72,9 +109,17 @@ public extension KeyboardNotification {
     
 }
 
+// MARK: - Keyboard frame accessor
 public extension Notification {
     
-    public var keyboardFrame: CGRect? { return self.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect }
-    public var keyboardSize: CGSize? { return self.keyboardFrame?.size }
+    /// Get keyboard frame from Notification object
+    public var keyboardFrame: CGRect? {
+        return self.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect
+    }
+    
+    /// Get keyboard size from Notification object
+    public var keyboardSize: CGSize? {
+        return self.keyboardFrame?.size
+    }
     
 }
