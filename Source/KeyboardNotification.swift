@@ -56,7 +56,7 @@ public protocol KeyboardNotification: class {
 
 // MARK: - handling default implentation
 
-extension KeyboardNotification {
+public extension KeyboardNotification {
     
     /// Register object for all keyboard event store it on token for future use
     func registerKeyboardNotification() {
