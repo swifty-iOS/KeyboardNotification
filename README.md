@@ -30,7 +30,7 @@ $ pod install
 
 ## How to Use
 
-It is very simple and easy to use. Just adopt **KeyboardNotification** protocol to your Controller class or any class. Register your class for desire [Notification.Keyboard](/Source) type.
+It is very simple and easy to use. Just adopt **KeyboardNotification** protocol to your Controller class or any class. Register your class for desire [Notification.Keyboard](/Source/KeyboardNotification.swift) type.
 
  
 ```swift
