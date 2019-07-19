@@ -1,6 +1,6 @@
 # KeyboardNotification
 
-KeyboardNotification protocol helps to get Keyboard event like **Show / Hide / Frame Changes** along with keyboard ***frame*** and ***size***.
+KeyboardNotification protocol helps to get all the Keyboard events like **Show / Hide / Frame Changes** along with keyboard ***frame*** and ***size***.
 
 
 ## Installation
@@ -28,70 +28,34 @@ $ pod install
 ```
 
 
-##How to Use
+## How to Use
 
-It is very simple and easy to use. Just adopt **KeyboardNotification** protocol to your Controller class or any class. It will ask yoou declar a varibale ***keyboardTokens***.
+It is very simple and easy to use. Just adopt **KeyboardNotification** protocol to your Controller class or any class. Register your class for desire [Notification.Keyboard](/Source) type.
 
  
 ```swift
 class ViewController: UIViewController, KeyboardNotification {
-	....
-	var keyboardTokens: [NSObjectProtocol]?
 	...
-}
-```
+    override func viewDidLoad(_ animated: Bool) {
+        super.viewDidLoad(animated)
+        // Register Keboard notification with inline closure
+         registerKeyboardNotification(.willShow) { note _ in 
+         // Get notifcation when Keyboard will appears
 
-### Register Object
-You need to **register** your class for keyboard notification just by calling.
+         }
 
-```swift 
- 	registerKeyboardNotification()
-```
-
->**Note**: Once you register the object, then you must need to deregister you object.
-
-
-### Deregister Object
-If your no more interested to handle notification you should **deregister** your object like
-
-```swift
-	deregisterKeyboardNotification()
-```
-
-##Impleting Protocol
-
-Once you register the object, you can automatically get all notification mentioned below. Aslo you can access **keyboardFrame** and  **keyboardSize** directly from notification object.
-
-```swift
-    
-    func willShowKeyboard(_ note: Notification)
-    func didShowKeyboard(_ note: Notification)
-    func willHideKeyboard(_ note: Notification)
-    func didHideKeyboard(_ note: Notification)
-    func willChangeKeyboardFrame(_ note: Notification)
-    func didChangeKeyboardFrame(_ note: Notification)
-    
-
-```
-
-###Example
-
-```swift
-extension ViewController {
-
-	func willShowKeyboard(_ note: Notification) {
-	
-		let frame = note.keyboardFrame
+         // register Keyboard notification with inline function
+         registerKeyboardNotification(.willShow, handler: willShowKeyboard)
     }
-    
-    
-    func didHideKeyboard(_ note: Notification) {
-    	
-    	let size = note.keyboardSize   
-   	}    
-
+	
+    func willHideKeyboard(_ note: Notification) {
+        // Write your code while hiding keyboard
+        ....
+        // Access keyboard frame
+        let frame = note.keyboardFrame
+        
+    }
 }
-
 ```
 
 For more details check for sample project.
