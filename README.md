@@ -53,13 +53,13 @@ class ViewController: UIViewController, KeyboardNotification {
         ....
         // Access keyboard frame
         let frame = note.keyboardFrame
-        
+
     }
 }
 ```
 
 For more details check for sample project.
 
-##Licence
+## Licence
 
 **[MIT](LICENSE)**
