@@ -9,117 +9,111 @@
 import Foundation
 import UIKit
 
-/// Get all keyboard show/hide notification
+
+public extension Notification {
+    
+    /// Notification block handler send by NotificationCenter
+    typealias KeyboardHandler = (_ note: Notification) -> Void
+    
+    /// Keyboard notfication types
+    enum Keyboard {
+        
+        case willShow
+        case didShow
+        case willHide
+        case didHide
+        case willChangeFrame
+        case didChangeFrame
+        
+        /// Get the Notification.Name
+        public var name: Name {
+            switch self {
+            case .willShow: return UIResponder.keyboardWillShowNotification
+            case .didShow: return UIResponder.keyboardDidShowNotification
+            case .willHide: return UIResponder.keyboardWillHideNotification
+            case .didHide: return UIResponder.keyboardDidHideNotification
+            case .willChangeFrame: return UIResponder.keyboardWillChangeFrameNotification
+            case .didChangeFrame: return UIResponder.keyboardDidChangeFrameNotification
+            }
+        }
+        
+        // Get all the available KeyboardNotification Type
+        public static var all: [Keyboard] {
+            return [willShow, willHide, willChangeFrame, didHide, didShow, didChangeFrame]
+        }
+    }
+    
+}
+
+/// Manage all the keyboard Notification
 public protocol KeyboardNotification: class {
     
-    /// Register object for keyboard notification
-    func registerKeyboardNotification()
+    typealias NotificationRegistration = (Notification.Keyboard, Notification.KeyboardHandler)
     
-    /// Deregister object for keyboard notification
-    func deregisterKeyboardNotification()
-    
-    /// Keyboard notification token holder
-    var keyboardTokens: [NSObjectProtocol]? { get set }
-    
-    /// Callback, when keyboard is about to show
+    /// Returns a object which can use for deregistering keyboard notification
     ///
-    /// - Parameter note: Notification object of Keyboard
-    func willShowKeyboard(_ note: Notification)
-    
-    /// Callback, when keyboard is displayed on window
+    /// Register your object for a notification
+    /// - Parameter note: Keyboard notification type
+    /// - Parameter handler: Notification handler
     ///
-    /// - Parameter note: Notification object of Keyboard
-    func didShowKeyboard(_ note: Notification)
+    @discardableResult
+    func registerKeyboardNotification(_ note: Notification.Keyboard, handler: @escaping Notification.KeyboardHandler) -> NSObjectProtocol
     
-    /// Callback, when keyboard is about to hide
+    /// Returns list of keyboard notification and objects which can use for deregistering keyboard notification
     ///
-    /// - Parameter note: Notification object of Keyboard
-    func willHideKeyboard(_ note: Notification)
+    /// Register mulitple notifications for object
+    /// - Parameter notes: Keyboard notification and Handler
+    @discardableResult
+    func registerKeyboardNotification(for notes: [NotificationRegistration]) -> [(Notification.Keyboard, NSObjectProtocol)]
     
-    /// Callback, when keyboard is hidden from window
-    ///
-    /// - Parameter note: Notification object of Keyboard
-    func didHideKeyboard(_ note: Notification)
+    /// Remove keyboard notification  for given type
+    /// - Parameter observer: Object to notification observer
+    /// - Parameter type: Keyboard notification to remove
+    func deregisterKeyboardNotification(_ observer: NSObjectProtocol, type: Notification.Keyboard)
     
-    /// Callback, when keyboard frame is about ot change
-    ///
-    /// - Parameter note: Notification object of Keyboard
-    func willChangeKeyboardFrame(_ note: Notification)
-    
-    /// Callback, when keyboard frame is changed
-    ///
-    /// - Parameter note: Notification object of Keyboard
-    func didChangeKeyboardFrame(_ note: Notification)
+    /// Remove all the notification from list
+    /// - Parameter notes: Keyboard notificatio and Observer object
+    func deregisterKeyboardNotification(_ notes: [(Notification.Keyboard, NSObjectProtocol)])
     
 }
 
 
-// MARK: - handling default implentation
-
+// MARK: - Default implementation
 public extension KeyboardNotification {
     
-    /// Register object for all keyboard event store it on token for future use
-    func registerKeyboardNotification() {
-        deregisterKeyboardNotification()
-        keyboardTokens = []
-        allNotificationName.forEach {
-            keyboardTokens?.append(NotificationCenter.default.addObserver(forName: $0,
-                                                                          object: nil,
-                                                                          queue: nil,
-                                                                          using: handleNotification))
-        }
+    @discardableResult
+    func registerKeyboardNotification(_ note: Notification.Keyboard, handler: @escaping Notification.KeyboardHandler) -> NSObjectProtocol {
+        return NotificationCenter.default.addObserver(forName: note.name, object: nil, queue: nil, using: handler)
     }
     
-    /// Deregister object for all keyboard notification saved as token
-    func deregisterKeyboardNotification() {
-        keyboardTokens?.forEach {
-            NotificationCenter.default.removeObserver($0, name: nil, object: nil)
-        }
-        keyboardTokens?.removeAll()
-        keyboardTokens = nil
+    @discardableResult
+    func registerKeyboardNotification(for notes: [NotificationRegistration]) -> [(Notification.Keyboard, NSObjectProtocol)] {
+        return notes.map { ($0.0,registerKeyboardNotification($0.0, handler: $0.1)) }
     }
     
-    /// All notification thet need to handle
-    private var allNotificationName: [Notification.Name] {
-        
-        return [Notification.Name.UIKeyboardWillShow,
-                Notification.Name.UIKeyboardDidShow,
-                Notification.Name.UIKeyboardWillHide,
-                Notification.Name.UIKeyboardDidHide,
-                Notification.Name.UIKeyboardWillChangeFrame,
-                Notification.Name.UIKeyboardDidChangeFrame]
+    func deregisterKeyboardNotification(_ observer: NSObjectProtocol, type: Notification.Keyboard) {
+        NotificationCenter.default.removeObserver(observer, name: type.name, object: nil)
     }
     
-    /// map notification and callback method
-    ///
-    /// - Parameter note: Notification of keyboard
-    private func handleNotification(_ note: Notification) {
-        
-        switch note.name {
-        case NSNotification.Name.UIKeyboardWillShow: willShowKeyboard(note)
-        case NSNotification.Name.UIKeyboardDidShow: didShowKeyboard(note)
-        case NSNotification.Name.UIKeyboardWillHide: willHideKeyboard(note)
-        case NSNotification.Name.UIKeyboardDidHide: didHideKeyboard(note)
-        case NSNotification.Name.UIKeyboardWillChangeFrame: willChangeKeyboardFrame(note)
-        case NSNotification.Name.UIKeyboardDidChangeFrame: didChangeKeyboardFrame(note)
-        default: break
-        }
-        
+    func deregisterKeyboardNotification(_ notes: [(Notification.Keyboard, NSObjectProtocol)]) {
+        notes.forEach { deregisterKeyboardNotification($0.1, type: $0.0) }
     }
+    
     
 }
 
 // MARK: - Keyboard frame accessor
 public extension Notification {
     
-    /// Get keyboard frame from Notification object
-    public var keyboardFrame: CGRect? {
-        return self.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect
+    /// Get keyboardfrom Notification object
+    var keyboardFrame: CGRect? {
+        return self.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
     }
     
     /// Get keyboard size from Notification object
-    public var keyboardSize: CGSize? {
+    var keyboardSize: CGSize? {
         return self.keyboardFrame?.size
     }
     
 }
+
