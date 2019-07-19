@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "KeyboardNotification"
-  s.version      = "2.0"
+  s.version      = "2.0.1"
   s.summary      = "KeyboardNotification protocol help you to manage Keyboard notification and more"
   s.homepage     = "https://github.com/swifty-iOS/KeyboardNotification"
   s.license      = "MIT"
