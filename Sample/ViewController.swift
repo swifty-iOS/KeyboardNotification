@@ -10,10 +10,13 @@ import UIKit
 
 class ViewController: UIViewController, KeyboardNotification {
     
+    
     var keyboardTokens: [NSObjectProtocol]?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -24,12 +27,13 @@ class ViewController: UIViewController, KeyboardNotification {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        registerKeyboardNotification()
+        //registerKeyboardNotification()
+        registerKeyboardNotification(.willShow, handler: willShowKeyboard)
+        registerKeyboardNotification(for: [(.willHide, willHideKeyboard)])
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        deregisterKeyboardNotification()
     }
     
 }
@@ -63,6 +67,7 @@ extension ViewController {
 }
 
 extension ViewController: UITextFieldDelegate {
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
