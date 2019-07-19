@@ -99,7 +99,6 @@ public extension KeyboardNotification {
         notes.forEach { deregisterKeyboardNotification($0.1, type: $0.0) }
     }
     
-    
 }
 
 // MARK: - Keyboard frame accessor
