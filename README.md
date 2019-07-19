@@ -45,7 +45,7 @@ class ViewController: UIViewController, KeyboardNotification {
          }
 
          // register Keyboard notification with inline function
-         registerKeyboardNotification(.willShow, handler: willShowKeyboard)
+         registerKeyboardNotification(.willHide, handler: willHideKeyboard)
     }
 	
     func willHideKeyboard(_ note: Notification) {
